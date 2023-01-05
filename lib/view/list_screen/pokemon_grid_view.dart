@@ -22,16 +22,19 @@ class PokemonGridView extends StatelessWidget {
             children: [
               Expanded(
                 flex: 10,
-                child: GridView(
-                  padding: const EdgeInsets.all(8.0),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5, mainAxisSpacing: 8),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(bloc.pokemon.length, (index) {
-                    return PokemonCard(bloc.pokemon[index]);
-                  }).toList(),
-                ),
+                child: LayoutBuilder(builder: (context, constraints) {
+                  return GridView(
+                    padding: const EdgeInsets.all(8.0),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        // 16 é o espaçamento total entre as linhas
+                        mainAxisExtent: (constraints.maxHeight - 16) / 5),
+                    shrinkWrap: true,
+                    children: List.generate(bloc.pokemon.length, (index) {
+                      return PokemonCard(bloc.pokemon[index]);
+                    }).toList(),
+                  );
+                }),
               ),
               const Divider(color: Colors.black26, thickness: 3),
               Flexible(
