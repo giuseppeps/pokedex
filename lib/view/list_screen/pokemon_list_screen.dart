@@ -13,13 +13,16 @@ class PokemonListScreen extends StatefulWidget {
 
 class PokemonListScreenState extends State<PokemonListScreen> {
   @override
+  void initState() {
+    BlocProvider.of<PokemonBloc>(context).add(FetchPokemonEvent(0));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PokedexAppBar(title: 'Pokédex'),
-      body: BlocProvider(
-        create: (context) => PokemonBloc(),
-        child: const PokemonGridView(),
-      ),
+    return const Scaffold(
+      appBar: PokedexAppBar(title: 'Pokédex'),
+      body: PokemonGridView(),
     );
   }
 }
